@@ -1,0 +1,73 @@
+
+let tags=document.getElementById('tags')
+let textarea=document.getElementById('textarea')
+
+textarea.focus()
+
+textarea.addEventListener('keyup',(e)=>{
+  myboy(e.target.value)
+  if(e.key==='Enter'){
+    setTimeout(()=>{
+ e.target.value=''
+    }
+    ,10)
+   
+   random()
+  }
+})
+
+function myboy(input){
+    let fin=input.split(',').filter(tag=>tag.trim()!=='').map(tag=>tag.trim())
+    console.log(fin)
+
+tags.innerHTML=''
+fin.forEach(tag => {
+    const bab=document.createElement('span')
+    bab.classList.add('tag')
+    bab.innerHTML=tag
+    tags.appendChild(bab)
+}
+);
+}
+
+function random(){
+
+    let time=30
+
+    let interval=setInterval(()=>{
+    const randomchoice=randompick()
+    if(randomchoice!== undefined){
+        highlighttag(randomchoice)
+        setTimeout(()=>{
+            unhighlighttag(randomchoice)
+        },10)
+    }
+    },100)
+
+    setTimeout(()=>{
+       clearInterval(interval)
+       
+
+       setTimeout(()=>{
+        const tagm=randompick()
+        highlighttag(tagm)
+       },10)
+
+    },time*100)
+
+}
+
+function randompick(){
+let mine=document.querySelectorAll('.tag')
+
+return mine[Math.floor(Math.random()*mine.length)]
+}
+
+function highlighttag(r){
+    r.classList.add('highlight')
+
+
+}
+
+function unhighlighttag(r){
+r.classList.remove('highlight')
